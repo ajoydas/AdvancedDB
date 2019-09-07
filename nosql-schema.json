@@ -1,0 +1,104 @@
+{
+    "boarding_pass": {
+        "_id": "",
+        "ticket": {
+            "_id": "",
+            "pnr": {
+                "_id": "",
+                "name": "",
+                "contact_information": "",
+                "passenger": {
+                    "_id": "", 
+                    "passport_number": "", 
+                    "country": {
+                        "_id": "",
+                        "name": "",
+                        "population": ""
+                    },
+                    "date_of_expiry": ""
+                }
+            },
+            "flight": {
+                "_id": "",
+                "flight_number": "",
+                "seat": {
+                    "_id": "", 
+                    "seat_no": "", 
+                    "type": "", 
+                    "price": "", 
+                    "isSold": ""
+                }, 
+                "aeroplane": {
+                    "_id": "",
+                    "model": "",
+                    "capacity": "",
+                    "airline": [
+                        {
+                            "_id": "",
+                            "name": "",
+                            "type": ""
+                        }
+                    ]
+                },
+                "departure_date": "", 
+                "departure_time": "", 
+                "gate_number": "",
+                "airport": {
+                    "_id": "",
+                    "name": "",
+                    "type": "",
+                    "num_of_runways": "",
+                    "country": [
+                        {
+                            "_id": "",
+                            "name": "",
+                            "population": ""
+                        }
+                    ]  
+                }
+            },
+            "agent": {
+                "_id": "", 
+                "license_number": "", 
+                "membership_number": "", 
+                "country": [
+                    {
+                        "_id": "",
+                        "name": "",
+                        "population": ""
+                    }
+                ]
+            }
+        }
+    },
+    "distance": {
+        "_id": "",
+        "airport_id_as_source": {
+            "_id": "",
+            "name": "",
+            "type": "",
+            "num_of_runways": "",
+            "country": [
+                {
+                    "_id": "",
+                    "name": "",
+                    "population": ""
+                }
+            ]
+        }, 
+        "airport_id_as_dest": {
+            "_id": "",
+            "name": "",
+            "type": "",
+            "num_of_runways": "",
+            "country": [
+                {
+                    "_id": "",
+                    "name": "",
+                    "population": ""
+                }
+            ] 
+        }, 
+        "distance": ""
+    }
+}
