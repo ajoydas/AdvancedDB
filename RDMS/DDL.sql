@@ -2,7 +2,7 @@ CREATE table Airline
 (
     airline_id   number(10) primary key,
     name varchar2(20),
-    type varchar2(20)
+    airline_type varchar2(20)
 );
 
 CREATE table Aeroplane
@@ -25,7 +25,7 @@ CREATE table Airport
 (
     airport_id          number(10) primary key,
     name       varchar2(50),
-    type       varchar2(10),
+    airport_type       varchar2(10),
     num_of_runways    number(3),
     country_id number(3),
     CONSTRAINT Airport_FK FOREIGN KEY (country_id) REFERENCES Country (country_id)
@@ -35,8 +35,7 @@ CREATE table Flight
 (
     flight_num varchar2(20) primary key,
     aeroplane_id number(10),
-    departure_date DATE,
-    departure_time timestamp,
+    departure_time DATE,
     gate_num varchar2(10),
     airport_id_source number(10),
     CONSTRAINT Flight_FK FOREIGN KEY (airport_id_source) REFERENCES Airport (airport_id)
@@ -106,8 +105,7 @@ CREATE table FlightDestination
 (
     flight_num varchar2(20),
     airport_id_dest number(10),
-    arrival_date DATE,
-    arrival_time timestamp,
+    arrival_time DATE,
     CONSTRAINT FlightDestination_Airport_FK FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id),
     CONSTRAINT FlightDestination_Flight_FK FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
 );
