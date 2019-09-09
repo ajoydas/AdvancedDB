@@ -25,7 +25,7 @@ CREATE table Airport
 (
     airport_id          number(10) primary key,
     name       varchar2(50),
-    airport_type       varchar2(10),
+    airport_type       varchar2(20),
     num_of_runways    number(3),
     country_id number(3),
     CONSTRAINT Airport_FK FOREIGN KEY (country_id) REFERENCES Country (country_id)
@@ -54,7 +54,7 @@ CREATE table Seat
 (
     seat_id number(10) primary key,
     seat_no varchar2(10),
-    type varchar2(20),
+    seat_type varchar2(20),
     price number(10),
     isSold number(1),
     flight_num varchar2(20),

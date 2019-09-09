@@ -23,18 +23,21 @@ create table Aeroplane of Aeroplane_objtyp (
 
 CREATE type Country_objtyp as object
 (
-    country_id         number(3),
-    name       varchar2(20),
+    country_name       varchar2(20),
     population number(10)
 );
 
-CREATE type Airport as object
+CREATE type Airport_objtyp as object
 (
     airport_id          number(10),
-    name       varchar2(50),
+    airport_name       varchar2(50),
     airport_type       varchar2(10),
     num_of_runways    number(3),
     country Country_objtyp
+);
+
+create table Airport of Airport_objtyp (
+    PRIMARY KEY (airport_id)
 );
 
 CREATE type Flight_objtyp as object
@@ -43,90 +46,115 @@ CREATE type Flight_objtyp as object
     aeroplane_id number(10),
     departure_time DATE,
     gate_num varchar2(10),
-    airport_id_source number(10),
-    CONSTRAINT Flight_FK FOREIGN KEY (airport_id_source) REFERENCES Airport (airport_id)
+    airport_id_source number(10)
+);
+
+create table Flight of Flight_objtyp (
+    PRIMARY KEY (flight_num),
+    FOREIGN KEY (aeroplane_id) REFERENCES Aeroplane (aeroplane_id),
+    FOREIGN KEY (airport_id_source) REFERENCES Airport (airport_id)
 );
 
 CREATE type Passenger_objtyp as object
 (
-    passenger_id number(10),
     passport_num number(15),
     date_of_expiry DATE,
     country Country_objtyp
 );
 
-CREATE table Seat
+CREATE type Seat_objtyp as object
 (
-    seat_id number(10) primary key,
+    seat_id number(10),
     seat_no varchar2(10),
-    type varchar2(20),
+    seat_type varchar2(20),
     price number(10),
     isSold number(1),
-    flight_num varchar2(20),
-    CONSTRAINT Seat_FK FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
+    flight_num varchar2(20)
 );
 
-CREATE table Agent
+create table Seat of Seat_objtyp (
+    primary key (seat_id),
+    FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
+);
+
+CREATE type PNR_objtyp as object
 (
-    agent_id          number(10) primary key,
+    pnr_id number(10),
+    pnr_name varchar2(50),
+    contact_info varchar2(50),
+    passenger Passenger_objtyp
+);
+
+create table PNR of PNR_objtyp
+(
+    primary key (pnr_id)
+);
+
+CREATE type Agent_objtyp as object
+(
     license_num       number(10),
     membership_num    number(10),
-    country_id number(3),
-    CONSTRAINT Agent_FK FOREIGN KEY (country_id) REFERENCES Country (country_id)
+    country Country_objtyp
 );
 
-CREATE table Ticket
-(
-    ticket_id number(10) primary key,
-    seat_id number(10),
-    passenger_id number(10),
-    agent_id          number(10) null,
-    CONSTRAINT Ticket_Seat_FK FOREIGN KEY (seat_id) REFERENCES Seat (seat_id),
-    CONSTRAINT Ticket_Passenger_FK FOREIGN KEY (passenger_id) REFERENCES Passenger (passenger_id),
-    CONSTRAINT Ticket_Agent_FK FOREIGN KEY (agent_id) REFERENCES Agent (agent_id)
-);
-
-CREATE table BoardingPass
+CREATE type Ticket_objtyp as object
 (
     ticket_id number(10),
-    flight_num varchar2(20),
-    CONSTRAINT BoardingPass_Ticket_FK FOREIGN KEY (ticket_id) REFERENCES Ticket (ticket_id),
-    CONSTRAINT BoardingPass_Flight_FK FOREIGN KEY (flight_num) REFERENCES Flight (flight_num),
-    CONSTRAINT BoardingPass_PK PRIMARY KEY (ticket_id, flight_num)
- );
+    seat_id number(10),
+    pnr_id number(10),
+    agent Agent_objtyp
+);
 
-CREATE table PNR
+create table Ticket of Ticket_objtyp (
+    primary key (ticket_id),
+    FOREIGN KEY (seat_id) REFERENCES Seat (seat_id),
+    FOREIGN KEY (pnr_id) REFERENCES PNR (pnr_id)
+);
+
+CREATE type BoardingPass_objtyp as object
 (
-    pnr_id number(10) primary key,
-    name varchar2(50),
-    contact_info varchar2(50),
-    passenger_id number(10),
-    CONSTRAINT PNR_FK FOREIGN KEY (passenger_id) REFERENCES Passenger (passenger_id)
+    ticket_id number(10),
+    flight_num varchar2(20)
+);
+
+create table BoardingPass of BoardingPass_objtyp (
+    primary key (ticket_id, flight_num),
+    FOREIGN KEY (ticket_id) REFERENCES Ticket (ticket_id),
+    FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
 );
 
 
 /* Relations */
-CREATE table FlightDestination
+CREATE type FlightDestination_objtyp as object
 (
     flight_num varchar2(20),
     airport_id_dest number(10),
-    arrival_time DATE,
-    CONSTRAINT FlightDestination_Airport_FK FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id),
-    CONSTRAINT FlightDestination_Flight_FK FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
+    arrival_time DATE
 );
 
-CREATE table PNRSSR
+create table FlightDestination of FlightDestination_objtyp (
+    FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id),
+    FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
+);
+
+CREATE type PNRSSR_objtyp as object
 (
     pnr_id number(10),
-    service varchar2(20),
-    CONSTRAINT PNRSSR_FK FOREIGN KEY (pnr_id) REFERENCES PNR (pnr_id)
+    service varchar2(20)
 );
 
-CREATE table Distance
+create table PNRSSR of PNRSSR_objtyp (
+    FOREIGN KEY (pnr_id) REFERENCES PNR (pnr_id)
+);
+
+CREATE type Distance_objtyp as object
 (
     airport_id_source number(10),
     airport_id_dest number(10),
-    distant number(10),
-    CONSTRAINT Distance_Source_FK FOREIGN KEY (airport_id_source) REFERENCES Airport (airport_id),
-    CONSTRAINT Distance_Dest_FK FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id)
+    distant number(10)
+);
+
+create table Distance of Distance_objtyp (
+    FOREIGN KEY (airport_id_source) REFERENCES Airport (airport_id),
+    FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id)
 );
