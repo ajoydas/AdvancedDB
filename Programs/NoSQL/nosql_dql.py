@@ -106,3 +106,121 @@ data = {
 x = mycol.insert_one(data)
 
 print(x)
+
+"""
+========================================================================================================
+                                Selling ticket online by Agent
+                   @pnr
+                   @passenger info
+                   @ticket info
+                   @flight info
+                   @airport info
+                   @agent info                         
+========================================================================================================
+"""
+
+pnr = {
+    "name": fake.name(),
+    "contact_information": fake.address(),
+    "passenger": {
+        "passport_number": fake.uuid4(),
+        "country": {
+            "name": fake.country(),
+            "population": fake.random_int(0, 1000000000)
+        },
+        "date_of_expiry": fake.date(pattern="%Y-%m-%d", end_datetime=None)
+    }
+}
+
+seat = {
+    "seat_no": fake.random_int(1, 200),
+    "type": "A",
+    "price": fake.random_int(500, 2000),
+    "isSold": "true",
+    "agent": {
+        "license_num": fake.random_int(1, 200),
+        "membership_num": fake.random_int(2, 400),
+        "country": {
+            "name": fake.country(),
+            "population": fake.random_int(500, 20000000)
+        }
+    }
+}
+
+airport = {
+    "name": fake.name(),
+    "type": "adsasdqwe",
+    "num_of_runways": fake.random_int(1, 15),
+    "country": {
+        "name": fake.country(),
+        "population": fake.random_int(500, 20000000)
+    }
+}
+
+flight = {
+    "flight_number": fake.uuid4(),
+    "seat": seat,
+    "aeroplane": {
+        "model": fake.sentence(),
+        "capacity": fake.random_int(0, 2500),
+        "airline": {
+            "name": fake.sentence(),
+            "type": "Asd-1-3"
+        }
+    },
+    "departure_date": fake.date(pattern="%Y-%m-%d", end_datetime=None),
+    "departure_time": fake.date_time(tzinfo=None, end_datetime=None),
+    "gate_number": fake.random_int(1, 15),
+    "airport": airport
+}
+
+airport_id_as_source = airport
+
+airport_id_as_dest = {
+    "name": fake.name(),
+    "type": "qwpoqipq",
+    "num_of_runways": fake.random_int(1, 15),
+    "country": {
+        "name": fake.country(),
+        "population": fake.random_int(0, 1000000000)
+    }
+}
+
+data = {
+    "boarding_pass": {
+        "ticket": {
+            "pnr": pnr,
+            "flight": flight
+        }
+    },
+    "distance": {
+        "airport_id_as_source": airport_id_as_source,
+        "airport_id_as_dest": airport_id_as_dest,
+        "distance": fake.random_int(500, 150000)
+    }
+}
+
+x = mycol.insert_one(data)
+
+print(x)
+
+
+"""
+========================================================================================================
+                                Issue boarding pass to passengers                 
+========================================================================================================
+"""
+
+
+"""
+========================================================================================================
+                                Showing the available seats of a flight                 
+========================================================================================================
+"""
+
+
+"""
+========================================================================================================
+                                Display the flight list and departure time                 
+========================================================================================================
+"""
