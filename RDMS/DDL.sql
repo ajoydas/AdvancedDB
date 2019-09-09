@@ -1,7 +1,7 @@
 CREATE table Airline
 (
     airline_id   number(10) primary key,
-    name varchar2(20),
+    airline_name varchar2(20),
     airline_type varchar2(20)
 );
 
@@ -17,14 +17,14 @@ CREATE table Aeroplane
 CREATE table Country
 (
     country_id         number(3) primary key,
-    name       varchar2(20),
+    country_name       varchar2(20),
     population number(10)
 );
 
 CREATE table Airport
 (
     airport_id          number(10) primary key,
-    name       varchar2(50),
+    airport_name       varchar2(50),
     airport_type       varchar2(20),
     num_of_runways    number(3),
     country_id number(3),
@@ -93,7 +93,7 @@ CREATE table BoardingPass
 CREATE table PNR
 (
     pnr_id number(10) primary key,
-    name varchar2(50),
+    pnr_name varchar2(50),
     contact_info varchar2(50),
     passenger_id number(10),
     CONSTRAINT PNR_FK FOREIGN KEY (passenger_id) REFERENCES Passenger (passenger_id)

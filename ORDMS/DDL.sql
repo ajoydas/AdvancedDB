@@ -1,7 +1,7 @@
 CREATE type Airline_objtyp as object
 (
     airline_id   number(10),
-    name         varchar2(20),
+    airline_name         varchar2(20),
     airline_type varchar2(20)
 );
 create table Airline of Airline_objtyp (
@@ -31,7 +31,7 @@ CREATE type Airport_objtyp as object
 (
     airport_id          number(10),
     airport_name       varchar2(50),
-    airport_type       varchar2(10),
+    airport_type       varchar2(20),
     num_of_runways    number(3),
     country Country_objtyp
 );

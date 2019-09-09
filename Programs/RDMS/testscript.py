@@ -42,3 +42,5 @@ cursor.execute("""
     FROM user_tab_cols;
     """)
 
+
+

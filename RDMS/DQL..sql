@@ -9,7 +9,7 @@ commit;
 
 -- Issue boarding pass to passengers
 -- Insert to boarding pass
-insert into BOARDINGPASS values (10, 10);
+insert into BOARDINGPASS values (10, 'FLIGHT_NUM4');
 commit;
 
 -- Showing the available seats of a flight
@@ -24,12 +24,12 @@ select FLIGHT_NUM, DEPARTURE_TIME
 from FLIGHT;
 
 -- Display the flight list and arrival time
--- Select from flight
-select FLIGHT_NUM, DEPARTURE_TIME
-from FLIGHT;
+-- Select from FLIGHTDESTINATION
+select FLIGHT_NUM, ARRIVAL_TIME
+from FLIGHTDESTINATION;
 
 -- List of on-board passengers of a flight of an airline in a date
--- Select from boarding pass, joining with flight, Aeroplane, Airline
+-- Select from PASSENGER joining with boarding pass, flight, Aeroplane, Airline
 select *
 from PASSENGER p
     natural join TICKET
@@ -37,5 +37,5 @@ from PASSENGER p
     natural join FLIGHT
     natural join AEROPLANE
     natural join AIRLINE a
-where a.NAME like 'NAME1'
+where a.AIRLINE_NAME like 'NAME1'
 ;

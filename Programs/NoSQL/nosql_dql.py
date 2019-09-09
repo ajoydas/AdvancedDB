@@ -5,8 +5,8 @@ from faker import Faker
 fake = Faker()
 
 myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["ms-db-project"]
-mycol = mydb["airline"]
+mydb = myclient["advancedDB"]
+mycol = mydb["advancedDB"]
 
 # print(mycol)
 
@@ -23,7 +23,7 @@ mycol = mydb["airline"]
 """
 
 passenger_info = {
-    "passport_number": fake.uuid4(), 
+    "passport_number": fake.uuid4(),
     "country": {
         "name": fake.country(),
         "population": fake.random_int(0, 1000000000)
@@ -42,20 +42,20 @@ airline = {
     "type": "Asd-1-3"
 }
 
-aeroplane =  {
+aeroplane = {
     "model": fake.sentence(),
     "capacity": fake.random_int(0, 2500),
     "airline": airline
 }
 
 seat = {
-    "seat_no": fake.random_int(1, 200), 
-    "type": "A", 
-    "price": fake.random_int(500, 2000), 
+    "seat_no": fake.random_int(1, 200),
+    "type": "A",
+    "price": fake.random_int(500, 2000),
     "isSold": "true"
 }
 
-airport_country= {
+airport_country = {
     "name": fake.country(),
     "population": fake.random_int(500, 20000000)
 }
@@ -64,15 +64,15 @@ airport = {
     "name": fake.name(),
     "type": "adsasdqwe",
     "num_of_runways": fake.random_int(1, 15),
-    "country": airport_country  
+    "country": airport_country
 }
 
 flight = {
     "flight_number": fake.uuid4(),
-    "seat": seat, 
+    "seat": seat,
     "aeroplane": aeroplane,
-    "departure_date": fake.date(pattern="%Y-%m-%d", end_datetime=None), 
-    "departure_time": fake.date_time(tzinfo=None, end_datetime=None), 
+    "departure_date": fake.date(pattern="%Y-%m-%d", end_datetime=None),
+    "departure_time": fake.date_time(tzinfo=None, end_datetime=None),
     "gate_number": fake.random_int(1, 15),
     "airport": airport
 }
@@ -97,8 +97,8 @@ data = {
         }
     },
     "distance": {
-        "airport_id_as_source": airport_id_as_source, 
-        "airport_id_as_dest": airport_id_as_dest, 
+        "airport_id_as_source": airport_id_as_source,
+        "airport_id_as_dest": airport_id_as_dest,
         "distance": fake.random_int(500, 150000)
     }
 }
