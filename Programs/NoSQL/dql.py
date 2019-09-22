@@ -139,7 +139,7 @@ pprint.pprint(flights)
                                 Display the flight list and arrival time                 
 ========================================================================================================
 """
-flights = list(flight_col.find({},{"arrival_time":1}))
+flights = list(flight_col.find({},{"dests":1}))
 pprint.pprint(flights)
 
 
@@ -148,4 +148,22 @@ pprint.pprint(flights)
                     List of on-board passengers of a flight of an airline in a date                 
 ========================================================================================================
 """
-flight
+airlines = list(airline_col.find())
+random_airline = airlines[fake.random_int(0, len(airlines)-1)]
+
+seats = []
+for aeroplane in random_airline["aeroplanes"]:
+    f = list(flight_col.find({"aeroplane_id": aeroplane["_id"]}))
+    for flight in f:
+        seats.extend(flight["seats"])
+
+passengers = []
+for seat in seats:
+    ticket = ticket_col.find_one({"seat_id": seat["_id"]})
+    if ticket is None:
+        continue
+    ticket = ticket
+    if ticket["boarding_pass"] is None:
+        passengers.append(ticket["pnr"]["passenger_id"])
+
+pprint.pprint(passengers)

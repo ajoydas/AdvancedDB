@@ -11,15 +11,18 @@ country_col = mydb["country"]
 flight_col = mydb["flight"]
 ticket_col = mydb["ticket"]
 airline_col = mydb["airline"]
+distance_col = mydb["distance"]
 
 country_col.delete_many({})
 airline_col.delete_many({})
 flight_col.delete_many({})
 ticket_col.delete_many({})
+distance_col.delete_many({})
 
 
 count = 20
 countries = []
+airport_list = []
 for i in range(0, count):
     airports = []
     for j in range(0, count//2):
@@ -59,9 +62,24 @@ for i in range(0, count):
     }
 
     countries.append(country)
+    airport_list.extend(airports)
+
 x = country_col.insert_many(countries)
 print(x)
 
+# distance
+distances = []
+for i in range(len(airport_list)):
+    for j in range(i+1, len(airport_list)):
+        distance = {
+            "airport1": airport_list[i]["_id"],
+            "airport2": airport_list[j]["_id"],
+            "distance": fake.random_int(0, 10000)
+        }
+        distances.append(distance)
+
+x = distance_col.insert_many(distances)
+print(x)
 
 airlines = []
 flights = []
@@ -121,16 +139,22 @@ for i in range(1, count):
                 else:
                     seat["issued"] = False
 
+
+            dests = []
+            for n in range(fake.random_int(0, count//4)):
+                dest = {
+                    "airport_id": countries[fake.random_int(0, count-1)]["airports"][fake.random_int(0, count//2-1)]["_id"],
+                    "arrival_time": fake.date_time(tzinfo=None, end_datetime=None),
+                }
+                dests.append(dest)
+
             flight = {
                 "_id": ObjectId(),
                 "aeroplane_id": aeroplane["_id"],
-                "departure_date": fake.date(pattern="%Y-%m-%d", end_datetime=None),
                 "departure_time": fake.date_time(tzinfo=None, end_datetime=None),
                 "gate_number": fake.random_int(1, 15),
                 "airport_id_as_source": countries[fake.random_int(0, count-1)]["airports"][fake.random_int(0, count//2-1)]["_id"],
-                "airport_id_as_dest": countries[fake.random_int(0, count-1)]["airports"][fake.random_int(0, count//2-1)]["_id"],
-                "arrival_date": fake.date(pattern="%Y-%m-%d", end_datetime=None),
-                "arrival_time": fake.date_time(tzinfo=None, end_datetime=None),
+                "dests": dests,
                 "seats": seats
             }
             flights.append(flight)
@@ -138,8 +162,8 @@ for i in range(1, count):
 
     airline = {
         "_id": ObjectId(),
-        "name": fake.sentence(),
-        "type": "Asd-1-3",
+        "name": fake.word(),
+        "type": fake.word(),
         "aeroplanes": aeroplanes
     }
 
