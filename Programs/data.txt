@@ -1,0 +1,73 @@
+{'_id': '5d7f4aa4d2394d86aacbfbe0',
+ 'aeroplanes': [{'_id': '5d7f4aa4d2394d86aacbfbd8',
+                 'capacity': 1442,
+                 'flights': [{'_id': '5d7f4aa4d2394d86aacbfbd7',
+                              'airport_id_as_dest': '5d7f49f1d2394d86aacb7d27',
+                              'airport_id_as_source': '5d7f49f1d2394d86aacb7cca',
+                              'arrival_time': '2003-07-29',
+                              'departure_date': '1984-09-19',
+                              'gate_number': 6,
+                              'seats': [{'_id': '5d7f4aa4d2394d86aacbfbd6',
+                                         'price': 1779,
+                                         'ticket': null,
+                                         'type': 'A'}]}],
+                 'model': 'Blue writer second all capital become.'},
+                {'_id': '5d7f4aa4d2394d86aacbfbdf',
+                 'capacity': 240,
+                 'flights': [{'_id': '5d7f4aa4d2394d86aacbfbde',
+                              'airport_id_as_dest': '5d7f49f1d2394d86aacb7d26',
+                              'airport_id_as_source': '5d7f49f1d2394d86aacb7cc9',
+                              'arrival_time': '2009-04-30',
+                              'departure_date': '2016-05-07',
+                              'gate_number': 2,
+                              'seats': [{'_id': '5d7f4aa4d2394d86aacbfbdd',
+                                         'price': 1896,
+                                         'ticket': {'_id': '5d7f4aa4d2394d86aacbfbdc',
+                                                    'agent_id': '5d7f49f1d2394d86aacb7cf2',
+                                                    'boarding_pass': {'_id': '5d7f4aa4d2394d86aacbfbdb'},
+                                                    'pnr': {'_id': '5d7f4aa4d2394d86aacbfbda',
+                                                            'name': 'Breanna',
+                                                            'passenger_id': '5d7f49f1d2394d86aacb7d3a',
+                                                            'services': [{'_id': '5d7f4aa4d2394d86aacbfbd9',
+                                                                          'service': 'Dawn '}]}},
+                                         'type': 'A'}]}],
+                 'model': 'Stand system pattern write.'}],
+ 'name': 'Raise billion order close.',
+ 'type': 'Asd-1-3'}
+
+
+'seats': [
+   {'_id': '5d7f4aa4d2394d86aacbfbd6',
+                                         'price': 1779,
+                                         'ticket': None,
+                                         'type': 'A'},
+   {'_id': '5d7f4aa4d2394566acfgbgt',
+                                         'price': 3546,
+                                         'ticket': None,
+                                         'type': 'A'}
+]
+
+
+db.collection.aggregate([
+  {
+    $match: {
+      "aeroplanes.flights.seats.ticket": null
+    }
+  },
+  {
+    $project: {
+      seats: {
+        $filter: {
+          input: "$aeroplanes.flights.seats",
+          as: "seat",
+          cond: {
+            $eq: [
+              "$$seat.ticket",
+              null
+            ]
+          }
+        }
+      }
+    }
+  }
+])
