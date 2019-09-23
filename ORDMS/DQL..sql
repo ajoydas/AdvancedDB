@@ -41,5 +41,5 @@ from PNR p
     natural join AEROPLANE
     natural join AIRLINE a
 -- where p.PASSENGER.PASSPORT_NUM = 1000
-where a.AIRLINE_NAME like 'NAME1'
+where a.AIRLINE_NAME like 'NAME3'
 ;

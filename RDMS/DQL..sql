@@ -2,6 +2,7 @@
 -- Insert to ticket
 insert into TICKET values (22,10,10,null);
 commit;
+
 -- Selling ticket by agents
 -- Insert to ticket with agent
 insert into TICKET values (22,10,10,10);

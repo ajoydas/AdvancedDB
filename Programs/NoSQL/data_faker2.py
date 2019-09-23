@@ -89,7 +89,7 @@ for i in range(1, count):
     for j in range(0, count // 2):
         aeroplane = {
             "_id": ObjectId(),
-            "model": fake.sentence(),
+            "model": fake.word(),
             "capacity": fake.random_int(0, 2500),
         }
         aeroplanes.append(aeroplane)
@@ -109,7 +109,7 @@ for i in range(1, count):
                 for n in range(fake.random_int(0, count//4)):
                     pnrssr =  {
                         "_id": ObjectId(),
-                        "service": fake.name()
+                        "service": fake.word(['veg-meal','coffee','extra-luggage'])
                     }
                     pnrssrs.append(pnrssr)
 
@@ -124,6 +124,7 @@ for i in range(1, count):
                 boarding_pass = {
                     "_id": ObjectId(),
                     "issue_time": fake.date_time(tzinfo=None, end_datetime=None),
+                    "checked_in": True if fake.random_int(0, 1) else False,
                 }
 
                 if fake.random_int(0, 1) :

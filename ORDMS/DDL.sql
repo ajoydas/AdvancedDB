@@ -40,13 +40,23 @@ create table Airport of Airport_objtyp (
     PRIMARY KEY (airport_id)
 );
 
+CREATE type FlightDestination_objtyp as object
+(
+    airport_id_dest number(10),
+    arrival_time DATE
+);
+
+CREATE TYPE FlightDestination_array AS VARRAY(10) OF FlightDestination_objtyp;
+
+
 CREATE type Flight_objtyp as object
 (
     flight_num varchar2(20),
     aeroplane_id number(10),
     departure_time DATE,
     gate_num varchar2(10),
-    airport_id_source number(10)
+    airport_id_source number(10),
+    dests FlightDestination_array
 );
 
 create table Flight of Flight_objtyp (
@@ -125,17 +135,17 @@ create table BoardingPass of BoardingPass_objtyp (
 
 
 /* Relations */
-CREATE type FlightDestination_objtyp as object
-(
-    flight_num varchar2(20),
-    airport_id_dest number(10),
-    arrival_time DATE
-);
+-- CREATE type FlightDestination_objtyp as object
+-- (
+--     flight_num varchar2(20),
+--     airport_id_dest number(10),
+--     arrival_time DATE
+-- );
 
-create table FlightDestination of FlightDestination_objtyp (
-    FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id),
-    FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
-);
+-- create table FlightDestination of FlightDestination_objtyp (
+--     FOREIGN KEY (airport_id_dest) REFERENCES Airport (airport_id),
+--     FOREIGN KEY (flight_num) REFERENCES Flight (flight_num)
+-- );
 
 CREATE type PNRSSR_objtyp as object
 (

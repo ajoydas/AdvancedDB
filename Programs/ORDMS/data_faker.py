@@ -12,6 +12,9 @@ countryType = connection.gettype("COUNTRY_OBJTYP")
 agentType = connection.gettype("AGENT_OBJTYP")
 passengerType = connection.gettype("PASSENGER_OBJTYP")
 
+destType = connection.gettype("FLIGHTDESTINATION_OBJTYP")
+destArrayType = connection.gettype("FLIGHTDESTINATION_ARRAY")
+
 cursor = connection.cursor()
 
 def gen_data(column, type, i):
@@ -48,12 +51,22 @@ def gen_data(column, type, i):
         country.POPULATION = 3000 * i
         passenger.COUNTRY = country
         return passenger
+    if type == "FLIGHTDESTINATION_ARRAY":
+        dests = destArrayType.newobject()
+        dest1 = destType.newobject()
+        dest1.AIRPORT_ID_DEST = i
+        dest1.ARRIVAL_TIME = datetime.datetime.now() + datetime.timedelta(hours=i)
+        dests.append(dest1)
+        return dests
+
 
 
 tabs = ['Airline', 'Aeroplane', 'Airport', 'Flight',
-        'Seat', 'PNR', 'Ticket', 'BoardingPass', 'FlightDestination', 'PNRSSR', 'Distance']
+        'Seat', 'PNR', 'Ticket', 'BoardingPass', 'PNRSSR', 'Distance']
 
-# tabs = ['Airport']
+counter = 21
+
+
 for tab in tabs:
     print("Generating fake data for table:", tab)
     cursor = connection.cursor()
@@ -84,7 +97,7 @@ for tab in tabs:
     col_names += ")"
 
     dataToInsert = []
-    for i in range(1, 21):
+    for i in range(1, counter):
         data = []
         for indx, col in enumerate(cols):
             print(col)

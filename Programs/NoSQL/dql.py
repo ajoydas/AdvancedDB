@@ -162,8 +162,38 @@ for seat in seats:
     ticket = ticket_col.find_one({"seat_id": seat["_id"]})
     if ticket is None:
         continue
-    ticket = ticket
     if ticket["boarding_pass"] is None:
         passengers.append(ticket["pnr"]["passenger_id"])
 
 pprint.pprint(passengers)
+
+
+
+"""
+========================================================================================================
+                    Onboard passengers who ordered a particular service in a flight                
+========================================================================================================
+"""
+# db.ticket.find({ $and:[{"pnr.services.service": "coffee"},{"boarding_pass":{$ne: null}}]})
+#    .projection({"pnr.passenger_id":1})
+
+flights = list(flight_col.find())
+random_flight = flights[fake.random_int(0, len(flights)-1)]
+
+passengers = []
+for seat in random_flight["seats"]:
+    ticket = ticket_col.find_one({"seat_id": seat["_id"]})
+    if ticket is None:
+        continue
+    if ticket["boarding_pass"] is None:
+        continue
+    for service in ticket["pnr"]["services"]:
+        print("Service: "+ service["service"])
+        if service["service"] == "coffee":
+            passengers.append(ticket["pnr"]["passenger_id"])
+
+pprint.pprint(passengers)
+
+
+# joining of
+# PNR, PNRSSR, BOARDING_PASS, TICKET, SEAT, Flight
