@@ -6,7 +6,7 @@ commit;
 
 -- Selling ticket by agents
 -- Insert to ticket with agent
-insert into TICKET values (22,10,10, NEW AGENT_OBJTYP(10,20, NEW COUNTRY_OBJTYP('country1', 9999)));
+insert into TICKET values (22,10,10, AGENT_OBJTYP(10,20, COUNTRY_OBJTYP('country1', 9999)));
 commit;
 
 -- Issue boarding pass to passengers
@@ -28,8 +28,8 @@ from FLIGHT;
 
 -- Display the flight list and arrival time
 -- Select from FLIGHTDESTINATION
-select FLIGHT_NUM, ARRIVAL_TIME
-from FLIGHTDESTINATION;
+select FLIGHT_NUM, DESTS
+from FLIGHT;
 
 -- List of on-board passengers of a flight of an airline in a date
 -- Select from PNR joining with boarding pass, flight, Aeroplane, Airline

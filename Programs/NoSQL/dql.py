@@ -183,12 +183,9 @@ random_flight = flights[fake.random_int(0, len(flights)-1)]
 passengers = []
 for seat in random_flight["seats"]:
     ticket = ticket_col.find_one({"seat_id": seat["_id"]})
-    if ticket is None:
-        continue
-    if ticket["boarding_pass"] is None:
+    if ticket is None or ticket["boarding_pass"] is None:
         continue
     for service in ticket["pnr"]["services"]:
-        print("Service: "+ service["service"])
         if service["service"] == "coffee":
             passengers.append(ticket["pnr"]["passenger_id"])
 
@@ -197,3 +194,6 @@ pprint.pprint(passengers)
 
 # joining of
 # PNR, PNRSSR, BOARDING_PASS, TICKET, SEAT, Flight
+
+
+

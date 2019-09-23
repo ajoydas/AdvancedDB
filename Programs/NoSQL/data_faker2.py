@@ -19,8 +19,9 @@ flight_col.delete_many({})
 ticket_col.delete_many({})
 distance_col.delete_many({})
 
+start = datetime.datetime.now()
 
-count = 20
+count = 40
 countries = []
 airport_list = []
 for i in range(0, count):
@@ -177,3 +178,7 @@ x = flight_col.insert_many(flights)
 print(x)
 x = ticket_col.insert_many(tickets)
 print(x)
+
+
+end = datetime.datetime.now()
+print("Took: "+ str((end-start).microseconds/1000)+" mili sec")

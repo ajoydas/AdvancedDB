@@ -31,7 +31,7 @@ def gen_data(column, type, i):
 tabs = ['Airline', 'Aeroplane', 'Country', 'Airport', 'Flight', 'Passenger',
         'Seat', 'Agent', 'Ticket', 'BoardingPass', 'PNR', 'FlightDestination', 'PNRSSR', 'Distance']
 
-counter = 10000
+counter = 1000
 start = datetime.datetime.now()
 
 for tab in tabs:

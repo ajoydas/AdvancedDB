@@ -4,6 +4,9 @@ import datetime
 import random
 
 import cx_Oracle
+from faker import Faker
+
+fake = Faker()
 
 # Connect as user "hr" with password "welcome" to the "orclpdb1" service running on this computer.
 dsn = cx_Oracle.makedsn("localhost", 32799, sid="ORCLCDB")
@@ -20,6 +23,8 @@ cursor = connection.cursor()
 def gen_data(column, type, i):
     if column == "ISSOLD":
         return int(random.getrandbits(1))
+    if column == "GATE_NUM":
+        return fake.random_int(0, 10)
     if type == "NUMBER":
         return i
     if type == "VARCHAR2":
@@ -64,9 +69,9 @@ def gen_data(column, type, i):
 tabs = ['Airline', 'Aeroplane', 'Airport', 'Flight',
         'Seat', 'PNR', 'Ticket', 'BoardingPass', 'PNRSSR', 'Distance']
 
-counter = 21
+counter = 1000
 
-
+start = datetime.datetime.now()
 for tab in tabs:
     print("Generating fake data for table:", tab)
     cursor = connection.cursor()
@@ -110,3 +115,6 @@ for tab in tabs:
 
 connection.commit()
 cursor.close()
+
+end = datetime.datetime.now()
+print("Took: "+ str((end-start).microseconds/1000)+" mili sec")
